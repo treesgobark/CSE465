@@ -7,11 +7,15 @@ import utilities.CodeReader;
 public class Main {
 
 	public static void main(String[] args) {
-		CodeReader reader = new CodeReader(new File ("programs/prog1"
-				+ ".txt"));
-		while(reader.hasNextStatement()) {
-			System.out.print(reader.nextStatement() + "\n");
+		CodeReader fileReader = new CodeReader(new File ("programs/prog1" + ".txt"));
+		while(fileReader.hasNextStatement()) {
+			System.out.print(fileReader.nextStatement() + "\n");
 		}
+//		System.out.println("-------------");
+//		CodeReader blockReader = new CodeReader("{ ur = mom ; big += gay ; }");
+//		while(blockReader.hasNextStatement()) {
+//			System.out.print(blockReader.nextStatement() + "\n");
+//		}
 	}
 
 }

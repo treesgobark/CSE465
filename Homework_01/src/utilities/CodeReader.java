@@ -3,7 +3,7 @@ package utilities;
 import java.io.*;
 import java.util.ArrayList;
 
-import objects.Statement;
+import objects.Block;
 
 public class CodeReader {
 	private char[] fileArray;
@@ -16,10 +16,21 @@ public class CodeReader {
 		fileToCharArray();
 	}
 	
-	public Statement nextStatement() {
+	/**
+	 * 
+	 * @param codeBlock - this is a block of statements that starts with '{' and ends with '}'
+	 */
+	public CodeReader(String codeBlock) {
+		String temp = codeBlock;
+		temp = temp.substring(1, temp.length()-1);
+		fileArray = temp.toCharArray();
+	}
+	
+	public Block nextStatement() {
 		StringBuilder sb = new StringBuilder();
 		int braceDepth = 0;
 		boolean loop = true;
+		while(placeholder < fileArray.length && fileArray[placeholder] == ' ') placeholder++;
 		while(placeholder < fileArray.length && loop) {
 			switch(fileArray[placeholder]) {
 			case ';': 	sb.append(';');
@@ -36,7 +47,7 @@ public class CodeReader {
 			}
 			placeholder++;
 		}
-		return new Statement(sb.toString());
+		return new Block(sb.toString());
 	}
 	
 	private void fileToCharArray() {

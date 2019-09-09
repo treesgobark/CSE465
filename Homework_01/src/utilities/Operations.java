@@ -6,7 +6,7 @@ import objects.Type;
 import objects.Datum;
 
 public class Operations {
-	private static Hashtable<String, Datum> symbolTable = new Hashtable<String, Datum>();
+	public static Hashtable<String, Datum> symbolTable = new Hashtable<String, Datum>();
 	
 	public static void gets(String key, Object value) {
 		Type type = Type.NULL;
