@@ -18,9 +18,28 @@ public class Equals {
 	}
 
 	public void evaluate() {
-		if(type == 0) Operations.gets(key, value);
-		if(type == 1) Operations.plusEquals(key, value);
-		if(type == 2) Operations.timesEquals(key, value);
-		if(type == 3) Operations.andEquals(key, value);
+		if (type == 0)
+			Operations.gets(key, value);
+		if (type == 1)
+			Operations.plusEquals(key, value);
+		if (type == 2)
+			Operations.timesEquals(key, value);
+		if (type == 3)
+			Operations.andEquals(key, value);
+	}
+	
+	public String toString() {
+		String temp;
+		if (type == 0)
+			temp = "=";
+		else if (type == 1)
+			temp = "+=";
+		else if (type == 2)
+			temp = "*=";
+		else if (type == 3)
+			temp = "&=";
+		else
+			temp = "equals?";
+		return temp;
 	}
 }

@@ -7,8 +7,8 @@ import utilities.CodeReader;
 public class Main {
 
 	public static void main(String[] args) {
-		CodeReader fileReader = new CodeReader(new File ("programs/prog1" + ".txt"));
-		while(fileReader.hasNextStatement()) {
+		CodeReader fileReader = new CodeReader(new File("programs/prog13" + ".txt"));
+		while (fileReader.hasNextStatement()) {
 			System.out.print(fileReader.nextStatement() + "\n");
 		}
 //		System.out.println("-------------");

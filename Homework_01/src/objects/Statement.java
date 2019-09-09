@@ -2,48 +2,100 @@ package objects;
 
 import java.util.ArrayList;
 
+import utilities.CodeReader;
 import utilities.Equals;
 import utilities.For;
 import utilities.Key;
 import utilities.Print;
+import utilities.Stop;
 
 public class Statement {
 	ArrayList<Object> instructions;
 
 	public Statement(String statementString) {
+//		System.out.println("string=" + statementString);
 		instructions = new ArrayList<Object>();
 		String prog = "";
 		boolean isString = false;
-		for(int i = 0; i < statementString.length(); i++ ) {
+		int blockCount = 0;
+		for (int i = 0; i < statementString.length(); i++) {
 			char temp = statementString.charAt(i);
-			if(temp == '\"') isString = !isString;
-			if(temp == ' ' && !isString) {
-				instructions.add(convert(prog));
+			if (temp == '\"')
+				isString = !isString;
+			if (temp == '{')
+				blockCount++;
+			if (temp == '}')
+				blockCount--;
+			if ((temp == ' ' || temp == '}') && !isString && blockCount == 0) {
+//				System.out.println(prog);
+				if (temp == '}') {
+					prog += temp;
+					i++;
+				}
+				convert(prog);
 				prog = "";
-			} else prog += temp;
+			} else
+				prog += temp;
 		}
 	}
 
-	private Object convert(String prog) {
-		if(prog.contentEquals("PRINT")) return new Print();
-		if(prog.contentEquals("FOR")) return new For();
-		if(prog.contentEquals("TRUE")) return new Boolean(true);
-		if(prog.contentEquals("FALSE")) return new Boolean(false);
-		if(prog.contentEquals("=")) return new Equals(0);
-		if(prog.contentEquals("+=")) return new Equals(1);
-		if(prog.contentEquals("*=")) return new Equals(2);
-		if(prog.contentEquals("&=")) return new Equals(3);
-		if(isNumeric(prog)) return Integer.parseInt(prog);
-		if(prog.contains("\"")) return prog.substring(1, prog.length()-1);
-		return new Key(prog);
+	private void convert(String prog) {
+//		System.out.println("prog=" + prog);
+		if (prog.contentEquals("PRINT")) {
+			instructions.add(new Print());
+		}
+		else if (prog.contentEquals("FOR")) {
+			instructions.add(new For());
+		}
+		else if (prog.contentEquals("TRUE")) {
+			instructions.add(new Boolean(true));
+		}
+		else if (prog.contentEquals("FALSE")) {
+			instructions.add(new Boolean(false));
+		}
+		else if (prog.contentEquals("=")) {
+			instructions.add(new Equals(0));
+		}
+		else if (prog.contentEquals("+=")) {
+			instructions.add(new Equals(1));
+		}
+		else if (prog.contentEquals("*=")) {
+			instructions.add(new Equals(2));
+		}
+		else if (prog.contentEquals("&=")) {
+			instructions.add(new Equals(3));
+		}
+		else if (prog.contentEquals(";")) {
+			instructions.add(new Stop());
+		}
+		else if (isNumeric(prog)) {
+			instructions.add(Integer.parseInt(prog));
+		}
+		else if (prog.contains("{") && prog.contains("}")) {
+//			System.out.println("prog=" + prog);
+			CodeReader reader = new CodeReader(prog);
+			while (reader.hasNextStatement()) {
+				Block temp = reader.nextStatement();
+				if (!temp.getBlockString().contentEquals("")) {
+					System.out.println("block=" + temp);
+					instructions.add(temp);
+				}
+			}
+		}
+		else if (prog.contains("\"")) {
+			instructions.add(prog.substring(1, prog.length() - 1));
+		}
+		else {
+			instructions.add(new Key(prog));
+		}
 	}
-	
-	private boolean isNumeric(String s) {  
-	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+
+	private boolean isNumeric(String s) {
+		return s != null && s.matches("[-+]?\\d*\\.?\\d+");
 	}
-	
+
 	public String toString() {
 		return instructions.toString();
 	}
-	
+
 }
