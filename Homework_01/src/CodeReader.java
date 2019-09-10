@@ -1,9 +1,7 @@
-package utilities;
+
 
 import java.io.*;
 import java.util.ArrayList;
-
-import objects.Block;
 
 public class CodeReader {
 	private char[] fileArray;

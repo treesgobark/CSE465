@@ -1,10 +1,7 @@
-package utilities;
+
 
 import java.util.HashMap;
 import java.util.Hashtable;
-
-import objects.Type;
-import objects.Datum;
 
 public class Operations {
 	public static HashMap<String, Datum> symbolTable = new HashMap<String, Datum>();

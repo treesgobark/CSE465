@@ -1,13 +1,6 @@
-package objects;
+
 
 import java.util.ArrayList;
-
-import utilities.CodeReader;
-import utilities.Equals;
-import utilities.For;
-import utilities.Key;
-import utilities.Print;
-import utilities.Stop;
 
 public class Block {
 	private String blockString;

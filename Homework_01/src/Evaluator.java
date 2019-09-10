@@ -1,6 +1,4 @@
-package utilities;
 
-import objects.Block;
 
 public class Evaluator {
 	public static void eval(Block block) {

@@ -1,4 +1,4 @@
-package objects;
+
 
 public class Datum {
 	public Type type;

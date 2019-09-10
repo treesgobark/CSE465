@@ -1,4 +1,4 @@
-package utilities;
+
 
 public class Equals {
 	private int type;
