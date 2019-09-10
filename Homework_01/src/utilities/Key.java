@@ -8,6 +8,6 @@ public class Key {
 	}
 	
 	public String toString() {
-		return "KEY";
+		return this.key;
 	}
 }

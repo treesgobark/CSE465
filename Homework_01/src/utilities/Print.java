@@ -10,7 +10,7 @@ public class Print {
 		this.key = key;
 	}
 
-	public void print() {
+	public void evaluate() {
 		Operations.print(key);
 	}
 	

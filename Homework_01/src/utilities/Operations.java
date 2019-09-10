@@ -1,12 +1,13 @@
 package utilities;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import objects.Type;
 import objects.Datum;
 
 public class Operations {
-	public static Hashtable<String, Datum> symbolTable = new Hashtable<String, Datum>();
+	public static HashMap<String, Datum> symbolTable = new HashMap<String, Datum>();
 
 	public static void gets(String key, Object value) {
 		Type type = Type.NULL;
@@ -23,7 +24,7 @@ public class Operations {
 
 	public static void plusEquals(String key, Object value) {
 		if (symbolTable.get(key).type == Type.BOOLEAN || !areCompatible(symbolTable.get(key).type, value)) {
-			System.out.println("TypeException");
+			throw new RuntimeException();
 		}
 		if (symbolTable.get(key).type == Type.STRING) {
 			String temp = (String) symbolTable.get(key).value;
@@ -36,7 +37,7 @@ public class Operations {
 
 	public static void timesEquals(String key, Object value) {
 		if (symbolTable.get(key).type != Type.INTEGER || !areCompatible(symbolTable.get(key).type, value)) {
-			System.out.println("TypeException");
+			throw new RuntimeException();
 		}
 		Integer temp = (Integer) symbolTable.get(key).value;
 		symbolTable.put(key, new Datum(Type.INTEGER, temp * (Integer) value));
@@ -44,14 +45,14 @@ public class Operations {
 
 	public static void andEquals(String key, Object value) {
 		if (symbolTable.get(key).type != Type.BOOLEAN || !areCompatible(symbolTable.get(key).type, value)) {
-			System.out.println("TypeException");
+			throw new RuntimeException();
 		}
 		Boolean temp = (Boolean) symbolTable.get(key).value;
 		symbolTable.put(key, new Datum(Type.BOOLEAN, temp && (Boolean) value));
 	}
 
 	public static void print(String key) {
-		System.out.print(key + "=" + symbolTable.get(key).value);
+		System.out.println(key + "=" + symbolTable.get(key).value);
 	}
 
 	public static boolean areCompatible(Type t, Object o) {

@@ -1,21 +1,23 @@
 package drivers;
 
 import java.io.File;
+import java.util.Scanner;
 
 import utilities.CodeReader;
+import utilities.Evaluator;
 
 public class Main {
 
 	public static void main(String[] args) {
-		CodeReader fileReader = new CodeReader(new File("programs/prog13" + ".txt"));
-		while (fileReader.hasNextStatement()) {
-			System.out.print(fileReader.nextStatement() + "\n");
+		boolean loop = true;
+		while (loop) {
+			Scanner sc = new Scanner(System.in);
+			int temp = sc.nextInt();
+			CodeReader fileReader = new CodeReader(new File("programs/" + args[1]));
+			while (fileReader.hasNextStatement()) {
+				Evaluator.eval(fileReader.nextStatement());
+			}
 		}
-//		System.out.println("-------------");
-//		CodeReader blockReader = new CodeReader("{ ur = mom ; big += gay ; }");
-//		while(blockReader.hasNextStatement()) {
-//			System.out.print(blockReader.nextStatement() + "\n");
-//		}
 	}
 
 }

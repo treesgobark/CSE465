@@ -3,7 +3,6 @@ package utilities;
 import java.util.ArrayList;
 
 import objects.Block;
-import objects.Statement;
 
 public class For {
 	private int iterations;
@@ -16,8 +15,14 @@ public class For {
 		this.iterations = iterations;
 	}
 
-	public void setStatementList(ArrayList<Statement> statementList) {
+	public void setBlock(Block block) {
 		this.block = block;
+	}
+	
+	public void evaluate() {
+		for (int i = 0; i < iterations-1; i++) {
+			Evaluator.eval(block);
+		}
 	}
 	
 	public String toString() {
