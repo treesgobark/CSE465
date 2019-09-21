@@ -1,0 +1,132 @@
+% Notes:
+% The symbol % is used for one-line comments.
+% Every fact/rule ends with a period.
+% Person is a predicate that I, as a programmer 
+%   choose to use in this program.
+% Names/objects are enclosed within parentheses.
+% Everything starts with a lowercase letter, except 
+%   for variables.
+% Variable names have to start with an uppercase 
+%   letter.
+
+person(alice).
+person(john).
+person(sam).
+person(bill).
+person(bob).
+
+sex(female).
+sex(male).
+
+% Associations/Relationships/Predicate
+% sex_of(x, y) - x's sex is y
+sex_of(alice, female). 
+% not equivalent to 
+% sex_of(female, alice).
+sex_of(john, male).
+sex_of(sam, male).
+sex_of(bill, male).
+sex_of(bob, male).
+
+% mother(x, y) - x is the mother of y
+mother(alice, sam).
+mother(alice, bill).
+
+% father(x, y) - x is the father of y
+father(john, sam).
+father(john, bill).
+
+% parent(x, y) - x is a parent of y
+%    x is a mother or father of y
+parent(X, Y) :- mother(X, Y).
+parent(X, Y) :- father(X, Y).
+
+% married(x, y) - x is married to y
+married(alice, john).
+married(X, Y) :- married(Y, X).
+
+% sibling(x, y) - x is at least a half-sibling of y
+sibling(X, Y) :- parent(A, Y),
+                 parent(A, X),
+                 X != Y.
+
+-sibling(X, Y) :- parent(A, X),
+                  parent(B, X),
+                  parent(C, Y),
+                  parent(D, Y),
+                  A != B,
+                  A != C,
+				  A != D,
+                  B != C,
+				  B != D,
+				  C != D.
+
+% brother(x, y) - x is at least a half-brother of y
+brother(X, Y) :- sibling(X, Y),
+                 sex_of(X, male).
+                 
+% sister(x, y) - x is at least a half-sister of y
+sister(X, Y) :- sibling(X, Y),
+                sex_of(X, female).
+
+% half_sibling - x is a strict half-sibling of y
+half_sibling(X, Y) :- parent(A, X),
+                      parent(B, X),
+                      parent(B, Y),
+                      parent(C, Y),
+                      A != B,
+                      A != C,
+                      B != C.
+
+% half_brother - x is a strict half-brother of y
+half_brother(X, Y) :- half_sibling(X, Y),
+                      sex_of(X, male).
+
+% half_sister - x is a strict half-sister of y
+half_sister(X, Y) :- half_sibling(X, Y),
+                      sex_of(X, female).
+
+% full_sibling(x, y) - x is a full sibling of y
+full_sibling(X, Y) :- parent(A, X),
+                      parent(A, Y),
+                      parent(B, X),
+                      parent(B, Y),
+                      A != B,
+                      X != Y.
+
+% full_brother(x, y) - x is a full brother of y
+full_brother(X, Y) :- full_sibling(X, Y),
+                      sex_of(X, male).
+
+% full_sister(x, y) - x is a full sister of y
+full_brother(X, Y) :- full_sibling(X, Y),
+                      sex_of(X, female).
+
+% step_sibling(x, y) - x is a step-sibling of y
+step_sibling(X, Y) :- parent(A, X),
+					  parent(B, Y),
+					  married(A, B),
+					  -sibling(X, Y).
+					  
+% step_brother(x, y) - x is a step-brother of y
+step_brother(X, Y) :- step_sibling(X, Y),
+					  sex_of(X, male).
+
+% step_sister(x, y) - x is a step-sister of y
+step_sister(X, Y) :- step_sibling(X, Y),
+					 sex_of(X, female).
+
+% ":-" is read as "if"
+% Variables are placeholders for objects/constants
+% We have to write one rule per case.
+
+% Substitutions:
+% X = female, Y = alice
+% parent(female, alice) :- mother(female, alice).
+% Rule becomes useless.
+
+% X = alice, Y = sam
+% parent(alice, sam) :- mother(alice, sam).
+% Rule produces "parent(alice, sam)"
+
+% Plus many more substitutions
